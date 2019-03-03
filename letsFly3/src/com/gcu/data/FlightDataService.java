@@ -125,6 +125,43 @@ public class FlightDataService implements FlightDataAccessInterface<Flight>{
 		return inBoundFlight;		
 		
 	}
+	
+	public List<Flight> findFlightById(Flight t)
+	{
+		List<Flight> flightById= new ArrayList<Flight>();
+		String sql= "SELECT * FROM LETSFLY.FLIGHT WHERE FID=?";
+		try {
+			//execute sql
+			SqlRowSet srs= jdbcTemplateObject.queryForRowSet(sql, t.getId());
+			while(srs.next()) {
+				flightById.add(new Flight(srs.getInt("FID"),
+						srs.getString("ORIGINAIRPORT"),
+						srs.getString("DESTINATIONAIRPORT"),
+						srs.getString("FLIGHTDATE"),
+						srs.getString("FLIGHTTIME"),
+						srs.getString("CONNECTIONFLIGHT"),
+						srs.getString("MEAL"),
+						srs.getString("AIRCRAFTTYPE"),
+						srs.getDouble("TOTALFLIGHTTIME"),
+						srs.getDouble("PRICE")
+								));
+				
+			}
+			System.out.println(flightById.size());
+		}
+		/**
+		 * Catching database exception and throwing custom exception
+		 */
+		catch (DataAccessException e)
+		{
+			
+			throw new DatabaseException(e);
+		}
+		
+	
+		return flightById;
+	}
+	
 	/**
 	 * setter method
 	 * @param dataSource

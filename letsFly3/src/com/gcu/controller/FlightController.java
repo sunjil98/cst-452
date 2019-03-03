@@ -6,9 +6,12 @@
  */
 package com.gcu.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gcu.business.FlightBusinessInterface;
@@ -69,6 +74,12 @@ public class FlightController {
 		return new ModelAndView("twoWayFlightSearchPage", "flight", new Flight(0, null, null, null, null, null, null, null, 0, 0));
 	}
 	
+	@RequestMapping(path="/viewSelectedFlights", method=RequestMethod.GET)
+	public ModelAndView displaySelectedFlights()
+	{
+		return new ModelAndView("viewSelectedFlightsPage");
+	}
+	
 	/**
 	 * This method is used to take the POST data from one way ticket search and redirect user to search result page.
 	 * This returns flight search result as a view.
@@ -110,7 +121,7 @@ public class FlightController {
 	 * @return modelAndView flighSearchResult
 	 */
 	@RequestMapping(path="/roundWayResult", method=RequestMethod.POST)
-	public ModelAndView displayRoundWayResult(@ModelAttribute("flight") Flight flight)
+	public ModelAndView displayRoundWayResult(@ModelAttribute("flight") Flight flight, HttpSession session)
 	{
 		logger.info("entering displayRoudWayResult method in flightcontroller");
 		/**
@@ -126,7 +137,9 @@ public class FlightController {
 			 */
 			ModelAndView mv = new ModelAndView("flightSearchResult");
 			mv.addObject("flights", flights);
+			session.setAttribute("flights", flights);
 			mv.addObject("inBound", inBound);
+			session.setAttribute("inBound", inBound);
 			return mv;
 		} catch (FlightNotFoundException e) {
 			System.out.println("caught no Flight found");
@@ -137,6 +150,23 @@ public class FlightController {
 		
 		
 	}
+	
+	@RequestMapping(value="/buy", method=RequestMethod.POST)
+	public String selectFlight(@ModelAttribute("flight") Flight flight, HttpSession session)
+	{
+     
+    	  List<Flight> cart= new ArrayList<Flight>();
+    	  try {
+			cart= interf.findFlightById(flight);
+		} catch (FlightNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	  session.setAttribute("cart", cart);
+    	  return "redirect:viewSelectedFlights";
+    	 
+	}
+	
 	/**
 	 * This method is used to redirect user to payment page
 	 * @return modelAndView

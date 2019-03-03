@@ -27,6 +27,8 @@ public interface FlightBusinessInterface {
 	public List<Flight> findOneWayFlight(Flight flight)throws FlightNotFoundException;
 	
 	public List<Flight> findBackWayFlight(Flight flight) throws FlightNotFoundException;
+	
+	public List<Flight> findFlightById(Flight flight) throws FlightNotFoundException;
 	/**
 	 * method init
 	 * @return void
@@ -37,5 +39,7 @@ public interface FlightBusinessInterface {
 	 * @return void
 	 */
 	public void destroy();
+
+
 
 }

@@ -57,6 +57,19 @@ public class FlightBusinessService implements FlightBusinessInterface {
 		else
 			return dao.findBackWayFlight(flight);
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Flight> findFlightById(Flight flight) throws FlightNotFoundException
+	{
+		List<Flight> flightById= dao.findFlightById(flight);
+		if(flightById.size()==0)
+		{
+			throw new FlightNotFoundException();
+		}
+		else
+			return flightById;
+	}
 	/**
 	 * init method to initialize the season
 	 * @return void

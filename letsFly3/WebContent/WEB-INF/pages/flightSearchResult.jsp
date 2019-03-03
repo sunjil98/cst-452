@@ -13,6 +13,7 @@
 <h5>Out Bound flight</h5>
 <table>
 		<tr>
+		<th><label>Flight ID</label></th>
 		<th ><label>Origin</label></th>
 		<th ><label>Destination</label></th>
 		<th ><label>Flight Date</label></th>
@@ -26,7 +27,7 @@
 		</tr>
 		<!-- For each loop -->
 		<c:forEach var="flights" items="${flights}">
-		<tr>	
+		<tr>	<td><label>${flights.id}</label></td>
 				<td><label>${flights.originAirport}</label></td>
 				<td><label>${flights.destinationAirport}</label></td>
 				<td><label>${flights.flightDate}</label></td>
@@ -36,8 +37,16 @@
 				<td><label>${flights.aircraftType}</label></td>
 				<td><label>${flights.flightHours}</label></td>
 				<td><label>${flights.price}</label></td>
-				<td><a href="${pageContext.request.contextPath}/buy/${flights.id}">Select</a></td>
-				</tr>
+				<!-- update button -->
+				<td>
+					<!-- send shoe data to update page -->
+					<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
+						<input id="id" name="id" type="hidden" value="${flights.id}"/>
+						<button type="submit" class="btn btn-success">Select</button>
+						<br/>
+					</form:form>
+				</td>
+		</tr>
 				
 		</c:forEach>
 		</table>
@@ -70,12 +79,12 @@
 				<td><label>${inBound.aircraftType}</label></td>
 				<td><label>${inBound.flightHours}</label></td>
 				<td><label>${inBound.price}</label></td>
-				<td><a href="${pageContext.request.contextPath}/buy/${inBound.id}">Select</a></td>
-				</tr>
+		</tr>
 				
 		</c:forEach>
 		</table>
 		
-		<a  href="/letsFly3/oneWay" role="button">Go Back</a>
+		<a href="/letsFly3/oneWay" role="button">Go Back</a>
+		<a href="/letsFly3/viewSelectedFlights" role="button"> See flights</a>
 </body>
 </html>

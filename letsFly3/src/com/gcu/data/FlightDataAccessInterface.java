@@ -30,5 +30,7 @@ public interface FlightDataAccessInterface <T>{
 	 * @return List
 	 */
 	public List<Flight> findBackWayFlight(T t);
+	
+	public List<Flight> findFlightById(T t);
 
 }
