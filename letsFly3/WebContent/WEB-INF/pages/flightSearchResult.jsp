@@ -13,7 +13,6 @@
 <h5>Out Bound flight</h5>
 <table>
 		<tr>
-		<th><label>Flight ID</label></th>
 		<th ><label>Origin</label></th>
 		<th ><label>Destination</label></th>
 		<th ><label>Flight Date</label></th>
@@ -27,7 +26,7 @@
 		</tr>
 		<!-- For each loop -->
 		<c:forEach var="flights" items="${flights}">
-		<tr>	<td><label>${flights.id}</label></td>
+		<tr>
 				<td><label>${flights.originAirport}</label></td>
 				<td><label>${flights.destinationAirport}</label></td>
 				<td><label>${flights.flightDate}</label></td>
@@ -51,8 +50,7 @@
 		</c:forEach>
 		</table>
 		
-
-		
+		<c:if test="${viewType==2}">
 		<h5>In bound flight</h5>
 		<table>
 		<tr>
@@ -79,11 +77,19 @@
 				<td><label>${inBound.aircraftType}</label></td>
 				<td><label>${inBound.flightHours}</label></td>
 				<td><label>${inBound.price}</label></td>
+				<td>
+					<!-- send shoe data to update page -->
+					<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
+						<input id="id" name="id" type="hidden" value="${inBound.id}"/>
+						<button type="submit" class="btn btn-success">Select</button>
+						<br/>
+					</form:form>
+				</td>
 		</tr>
 				
 		</c:forEach>
 		</table>
-		
+		</c:if>
 		<a href="/letsFly3/oneWay" role="button">Go Back</a>
 		<a href="/letsFly3/viewSelectedFlights" role="button"> See flights</a>
 </body>

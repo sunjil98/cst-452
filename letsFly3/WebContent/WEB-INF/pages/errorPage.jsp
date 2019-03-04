@@ -6,5 +6,5 @@
 	<h2>Error Page</h2>
 	<!-- error message -->
 	<h4>${error}</h4>
-	<a  href="/letsFly2/oneWay" role="button">Go Back</a>
+	<a  href="/letsFly3/oneWay" role="button">Go Back</a>
 </body>

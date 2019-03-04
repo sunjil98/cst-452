@@ -29,6 +29,12 @@
 				<td><label>${flights.aircraftType}</label></td>
 				<td><label>${flights.flightHours}</label></td>
 				<td><label>${flights.price}</label></td>
+				<td>
+				<form:form method="GET" modelAttribute="flight" action="oneWay" autocomplete="off">
+						<button type="submit" class="btn btn-remove">Remove</button>
+						<br/>
+					</form:form>
+				</td>
 				</tr>
 				</c:forEach>
 </table>

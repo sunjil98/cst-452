@@ -94,6 +94,7 @@ public class FlightController {
 		 * Getting the list of flights from business service
 		 */
 		List<Flight> flights;
+		int viewType=1;
 		try {
 			logger.info("Entering try block of oneWayResult");
 			flights = interf.findOneWayFlight(flight);
@@ -102,6 +103,7 @@ public class FlightController {
 			 */
 			ModelAndView mv = new ModelAndView("flightSearchResult");
 			mv.addObject("flights", flights);
+			mv.addObject("viewType",viewType);
 			logger.info("redirecting to flightSearchResult");
 			return mv;
 		} catch (FlightNotFoundException e) {
@@ -129,6 +131,7 @@ public class FlightController {
 		 */
 		List<Flight> flights;
 		List<Flight> inBound;
+		int viewType=2;
 		try {
 			flights = interf.findOneWayFlight(flight);
 			inBound= interf.findBackWayFlight(flight);
@@ -140,6 +143,7 @@ public class FlightController {
 			session.setAttribute("flights", flights);
 			mv.addObject("inBound", inBound);
 			session.setAttribute("inBound", inBound);
+			mv.addObject("viewType",viewType);
 			return mv;
 		} catch (FlightNotFoundException e) {
 			System.out.println("caught no Flight found");
