@@ -4,7 +4,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
+<!-- This page display the form to perform one way flight search. -->
 <h2>One way Flight</h2>
 <!-- Link to get to the page to search for round trip -->
 <a  href="/letsFly3/roundTrip" role="button">Round Trip</a>

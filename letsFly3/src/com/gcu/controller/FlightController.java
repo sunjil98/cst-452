@@ -94,6 +94,7 @@ public class FlightController {
 		 * Getting the list of flights from business service
 		 */
 		List<Flight> flights;
+		//ViewType one stands for one way search. This is used in JSTL if statement to show inBound Flight result
 		int viewType=1;
 		try {
 			logger.info("Entering try block of oneWayResult");
@@ -131,6 +132,7 @@ public class FlightController {
 		 */
 		List<Flight> flights;
 		List<Flight> inBound;
+		//ViewType two stands for round way search. This is used in JSTL if statement to show inBound Flight result
 		int viewType=2;
 		try {
 			flights = interf.findOneWayFlight(flight);
@@ -154,7 +156,12 @@ public class FlightController {
 		
 		
 	}
-	
+	/**
+	 * This method is used to get the id of user selected flight and storing the information of that particular flight in session. 
+	 * @param flight
+	 * @param session
+	 * @return View that shows the selected flight detail
+	 */
 	@RequestMapping(value="/buy", method=RequestMethod.POST)
 	public String selectFlight(@ModelAttribute("flight") Flight flight, HttpSession session)
 	{

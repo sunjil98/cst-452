@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- This page is responsible for providing detail of the flights they selected. It will also give user to choose the number of passenger -->
 <table>
+<!-- Table that goes through the list of flight that are stored in Session and render them -->
 		<tr>
 		<th ><label>Origin</label></th>
 		<th ><label>Destination</label></th>
@@ -38,7 +40,7 @@
 				</tr>
 				</c:forEach>
 </table>
-
+<!-- This is the form that is responsible for PayPal payment -->
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 
   <!-- Identify your business so that you can collect the payments. -->

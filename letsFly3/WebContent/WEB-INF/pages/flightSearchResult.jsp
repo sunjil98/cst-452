@@ -4,12 +4,10 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
+<!-- This page display the search result based on the data entered by user. It is divided into two display area, one to display outbound flight and \
+another one to display inBound flight. Inbound flight result is only displayed for round trip search result -->
 <body>
-<!-- This is the table to display search result -->
+<!-- This is the table to display inBound result -->
 <h5>Out Bound flight</h5>
 <table>
 		<tr>
@@ -24,7 +22,7 @@
 		<th><label>price</label>
 		
 		</tr>
-		<!-- For each loop -->
+		<!-- For each loop to dispaly all the outBound flight matching the criteria-->
 		<c:forEach var="flights" items="${flights}">
 		<tr>
 				<td><label>${flights.originAirport}</label></td>
@@ -36,9 +34,9 @@
 				<td><label>${flights.aircraftType}</label></td>
 				<td><label>${flights.flightHours}</label></td>
 				<td><label>${flights.price}</label></td>
-				<!-- update button -->
+				<!-- Select button to select flight-->
 				<td>
-					<!-- send shoe data to update page -->
+					<!-- send select data to viewSelectedFlight page -->
 					<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
 						<input id="id" name="id" type="hidden" value="${flights.id}"/>
 						<button type="submit" class="btn btn-success">Select</button>
@@ -65,7 +63,7 @@
 		<th><label>price</label>
 		
 		</tr>
-		<!-- For each loop -->
+		<!-- For each loop to display inBound flight for matching criteria-->
 		<c:forEach var="inBound" items="${inBound}">
 		<tr>	
 				<td><label>${inBound.originAirport}</label></td>
@@ -78,7 +76,7 @@
 				<td><label>${inBound.flightHours}</label></td>
 				<td><label>${inBound.price}</label></td>
 				<td>
-					<!-- send shoe data to update page -->
+					<!-- send select data to viewSelectedFlight page -->
 					<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
 						<input id="id" name="id" type="hidden" value="${inBound.id}"/>
 						<button type="submit" class="btn btn-success">Select</button>

@@ -49,7 +49,7 @@ public class FlightDataService implements FlightDataAccessInterface<Flight>{
 	public List<Flight> findOneWayFlight(Flight t) {
 		List<Flight> outBoundFlight = new ArrayList<Flight>();
 		
-		String sql= "SELECT * FROM LETSFLY.FLIGHT WHERE ORIGINAIRPORT=? AND DESTINATIONAIRPORT=? AND FLIGHTDATE=?";
+		String sql= "SELECT * FROM letsfly.FLIGHT WHERE ORIGINAIRPORT=? AND DESTINATIONAIRPORT=? AND FLIGHTDATE=?";
 		
 		try {
 			//execute sql
@@ -92,7 +92,7 @@ public class FlightDataService implements FlightDataAccessInterface<Flight>{
 	public List<Flight> findBackWayFlight(Flight t) {
 		List<Flight> inBoundFlight = new ArrayList<Flight>();
 		
-		String sql= "SELECT * FROM LETSFLY.FLIGHT WHERE ORIGINAIRPORT=? AND DESTINATIONAIRPORT=? AND FLIGHTDATE=?";
+		String sql= "SELECT * FROM letsfly.FLIGHT WHERE ORIGINAIRPORT=? AND DESTINATIONAIRPORT=? AND FLIGHTDATE=?";
 		
 		try {
 			//execute sql
@@ -125,11 +125,13 @@ public class FlightDataService implements FlightDataAccessInterface<Flight>{
 		return inBoundFlight;		
 		
 	}
-	
+	/**
+	 * This method is used to query the flight table based on flight id passed on by POST method. This return arraylist of flight and its information.
+	 */
 	public List<Flight> findFlightById(Flight t)
 	{
 		List<Flight> flightById= new ArrayList<Flight>();
-		String sql= "SELECT * FROM LETSFLY.FLIGHT WHERE FID=?";
+		String sql= "SELECT * FROM letsfly.FLIGHT WHERE FID=?";
 		try {
 			//execute sql
 			SqlRowSet srs= jdbcTemplateObject.queryForRowSet(sql, t.getId());

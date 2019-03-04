@@ -36,7 +36,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://letsfly.cvhykkzux4yr.us-east-2.rds.amazonaws.com" />
         <property name="username" value="root" />
-        <property name="password" value="!Password" />
+        <property name="password" value="password" />
     </bean>
     
       <!-- Setup Transaction Manager -->

@@ -10,17 +10,11 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="https://cdn.dataTables.net/1.10.16/css/jquery.dataTables.min.css">
 <script src="https://cdn.datatables.net/responsive/2.2.0/js/dataTables.responsive.js"></script>
- 
-	<title>Lets Fly</title>
-	<script>
-	 var dateToday = new Date();
-     $(function() {  
-        $( "#flightDate" ).datepicker(
-        		{
-        			minDate: dateToday,
-        		});  
-     });
-	</script>
+ <link href="${maincss}" rel="stylesheet" />
+ <spring:url value="/resources/css/main.css" var="maincss"/>
+ <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet" >
+<title>Lets Fly</title>
+
 </head>
 
 <body>

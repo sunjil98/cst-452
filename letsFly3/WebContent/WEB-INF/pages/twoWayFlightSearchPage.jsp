@@ -4,7 +4,8 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
+<!-- This page display the form where user can input information to perform two way flight search. The difference between
+this form and one way flight search form is it has extra field to enter return data -->
 <h2>Two way Flight</h2>
 <!-- Link to get the page to do one way ticket search -->
 <a  href="/letsFly3/oneWay" role="button">One Way</a>

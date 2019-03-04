@@ -17,4 +17,7 @@
 	<definition name="payment" extends="DefaultTemplate">
     	<put-attribute name="body" value="/WEB-INF/pages/payment.jsp" />
 	</definition>
+	<definition name="viewSelectedFlightsPage" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/viewSelectedFlightsPage.jsp" />
+	</definition>
 </tiles-definitions>

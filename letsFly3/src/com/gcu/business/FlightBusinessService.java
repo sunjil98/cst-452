@@ -29,7 +29,7 @@ public class FlightBusinessService implements FlightBusinessInterface {
 	FlightDataAccessInterface dao;
 	
 	/**
-	 * This method is reponsible to get list of flights passed on by the findOneWayFlight method in DAO class.
+	 * This method is responsible to get list of flights passed on by the findOneWayFlight method in DAO class.
 	 * It return List of flights as a result
 	 * @throws FlightNotFoundException 
 	 */
@@ -44,7 +44,11 @@ public class FlightBusinessService implements FlightBusinessInterface {
 		else
 		return dao.findOneWayFlight(flight);
 	}
-	
+	/**
+	 * This method is responsible to get list of flights passed on by the findBackWayFlight method in DAO class.
+	 * It return List of flights as a result
+	 * @throws FlightNotFoundException 
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Flight> findBackWayFlight(Flight flight) throws FlightNotFoundException
@@ -57,7 +61,12 @@ public class FlightBusinessService implements FlightBusinessInterface {
 		else
 			return dao.findBackWayFlight(flight);
 	}
-	
+	/**
+	 * This method is responsible to get the list of flight passed on by the findFlightById method in DAO class. The result is return based on flight id
+	 * passed on by the user.
+	 * It return List of flight as a result
+	 * * @throws FlightNotFoundException 
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Flight> findFlightById(Flight flight) throws FlightNotFoundException

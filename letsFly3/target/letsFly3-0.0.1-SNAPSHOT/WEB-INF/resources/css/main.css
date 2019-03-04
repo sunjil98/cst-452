@@ -1,0 +1,57 @@
+body {
+	background: #f3f3f3;
+	background-image: url("${pageContext.request.contextPath}/resources/images/nepal.png");
+    background-repeat: repeat;
+}
+
+h2 {
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.home_text {
+	color: #c0b283;
+	background: rgba(86,86,86,0.7);
+}
+
+th {
+	background-color: #373737;
+	color: #c0b283;
+}
+
+tr {
+	background-color: #dcd0c0;
+}
+
+#boot_nav {
+	color: #c0b283;
+}
+
+#input_field {
+	background: #f8f9fa;
+	border: 2px #dcd0c0 solid;
+	padding: 20px;
+	border-radius: 25px;
+}
+
+#about {
+	background: #f8f9fa;
+	border: 2px #dcd0c0 solid;
+	padding: 20px;
+	border-radius: 25px;
+}
+
+.container {
+  position: relative;
+  font-family: Arial;
+}
+
+.text-block {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: none;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0px 500px 130px 0px;
+}
