@@ -36,18 +36,29 @@ another one to display inBound flight. Inbound flight result is only displayed f
 				<td><label>${flights.price}</label></td>
 				<!-- Select button to select flight-->
 				<td>
-					<!-- send select data to viewSelectedFlight page -->
-					<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
+				<c:if test="${viewType==1}">
+				<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
 						<input id="id" name="id" type="hidden" value="${flights.id}"/>
+						<input id="viewTypeSelector" name="viewTypeSelector" type="hidden" value="${viewType}"/>
 						<button type="submit" class="btn btn-success">Select</button>
 						<br/>
 					</form:form>
+					</c:if>
+				<c:if test="${viewType==2}">
+					<!-- send select data to viewSelectedFlight page -->
+					<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
+						<input id="id" name="id" type="hidden" value="${flights.id}"/>
+						<input id="viewTypeSelector" name="viewTypeSelector" type="hidden" value="${viewType}"/>
+						<button type="submit" class="btn btn-success"  ${ buttonDisabler!=0  ? 'disabled="disabled"' : ''}>Select</button>
+						<br/>
+					</form:form>
+					</c:if>
 				</td>
 		</tr>
 				
 		</c:forEach>
 		</table>
-		
+		<h1><c:out value="${buttonDisabler}"></c:out></h1>
 		<c:if test="${viewType==2}">
 		<h5>In bound flight</h5>
 		<table>
@@ -79,7 +90,8 @@ another one to display inBound flight. Inbound flight result is only displayed f
 					<!-- send select data to viewSelectedFlight page -->
 					<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
 						<input id="id" name="id" type="hidden" value="${inBound.id}"/>
-						<button type="submit" class="btn btn-success">Select</button>
+						<input id="viewTypeSelector" name="viewTypeSelector" type="hidden" value="1"/>
+						<button type="submit" class="btn btn-success" ${ buttonDisabler==0  ? 'disabled="disabled"' : ''}>Select</button>
 						<br/>
 					</form:form>
 				</td>

@@ -52,6 +52,8 @@ public class FlightController {
 	 */
 	Flight flight;
 	
+	int buttonDisabler=0;
+	
 	/**
 	 * This method is used to display view to enter information for One way ticket. This return oneWayFlightSearchPage as a view.
 	 * @return View
@@ -72,6 +74,12 @@ public class FlightController {
 	{
 		logger.info("Entering displayRoundTripForm method in flightcontroller");
 		return new ModelAndView("twoWayFlightSearchPage", "flight", new Flight(0, null, null, null, null, null, null, null, 0, 0));
+	}
+	
+	@RequestMapping(path="/viewReturnFlightSearch", method=RequestMethod.GET)
+	public ModelAndView dispalyReturnFlightSearch()
+	{
+		return new ModelAndView("viewReturnFlightSearch");
 	}
 	
 	@RequestMapping(path="/viewSelectedFlights", method=RequestMethod.GET)
@@ -105,6 +113,7 @@ public class FlightController {
 			ModelAndView mv = new ModelAndView("flightSearchResult");
 			mv.addObject("flights", flights);
 			mv.addObject("viewType",viewType);
+			mv.addObject("buttonDisabler",buttonDisabler);
 			logger.info("redirecting to flightSearchResult");
 			return mv;
 		} catch (FlightNotFoundException e) {
@@ -146,6 +155,7 @@ public class FlightController {
 			mv.addObject("inBound", inBound);
 			session.setAttribute("inBound", inBound);
 			mv.addObject("viewType",viewType);
+			mv.addObject("buttonDisabler",buttonDisabler);
 			return mv;
 		} catch (FlightNotFoundException e) {
 			System.out.println("caught no Flight found");
@@ -156,6 +166,9 @@ public class FlightController {
 		
 		
 	}
+	List<Flight> cart= new ArrayList<Flight>();
+	int i=0;
+	
 	/**
 	 * This method is used to get the id of user selected flight and storing the information of that particular flight in session. 
 	 * @param flight
@@ -163,19 +176,43 @@ public class FlightController {
 	 * @return View that shows the selected flight detail
 	 */
 	@RequestMapping(value="/buy", method=RequestMethod.POST)
-	public String selectFlight(@ModelAttribute("flight") Flight flight, HttpSession session)
+	public ModelAndView selectFlight(@ModelAttribute("flight") Flight flight, HttpSession session,@RequestParam("viewTypeSelector") int viewTypeSelector)
 	{
-     
-    	  List<Flight> cart= new ArrayList<Flight>();
+         
+    	  i=cart.size();
+    	  
+    	 
     	  try {
-			cart= interf.findFlightById(flight);
+    		  if(viewTypeSelector==2)
+    		  {
+    		   ModelAndView mv = new ModelAndView("flightSearchResult");
+    		  cart.addAll(i, interf.findFlightById(flight));
+    		  i++;
+    		  buttonDisabler++;
+    		  int viewType=viewTypeSelector;
+    		  mv.addObject("viewType",viewType);
+    		  mv.addObject("buttonDisabler",buttonDisabler);
+    		  session.setAttribute("cart", cart);
+    		  return mv;
+    		  }
+    		  else
+    		  {
+    			  ModelAndView mv = new ModelAndView("viewSelectedFlightsPage");
+    			  cart.addAll(i, interf.findFlightById(flight));
+        		  i++;
+        		  int viewType=viewTypeSelector;
+        		  mv.addObject("viewType",viewType);
+        		  session.setAttribute("cart", cart);
+        	      return mv;
+    		  }
+    		 
+			
 		} catch (FlightNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	  session.setAttribute("cart", cart);
-    	  return "redirect:viewSelectedFlights";
-    	 
+    	  return null;
 	}
 	
 	/**
