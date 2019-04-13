@@ -1,7 +1,5 @@
-body {
-	background: #f3f3f3;
-	background-image: url("${pageContext.request.contextPath}/resources/images/nepal.png");
-    background-repeat: repeat;
+.body-home{
+	position:relative;
 }
 
 h2 {
@@ -54,4 +52,14 @@ tr {
   padding-left: 20px;
   padding-right: 20px;
   margin: 0px 500px 130px 0px;
+}
+
+.header-color{
+background: #8E2DE2;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #4A00E0, #8E2DE2);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	
+}
+info-grid{
+	border-radius:10px;
 }

@@ -4,6 +4,8 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- This page is responsible for providing detail of the flights they selected. It will also give user to choose the number of passenger -->
+<body>
+<h1><c:out value="${userInfo.firstname}"></c:out></h1>
 <table>
 <!-- Table that goes through the list of flight that are stored in Session and render them -->
 		<tr>
@@ -40,6 +42,11 @@
 				</tr>
 				</c:forEach>
 </table>
+<form:form method="POST" model="UserFlight" action="saveuser">
+
+<button type="submit" class="btn btn-submit">Confirm</button>
+</form:form>
+
 <!-- This is the form that is responsible for PayPal payment -->
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 
@@ -61,3 +68,4 @@
   src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
 
 </form>
+</body>

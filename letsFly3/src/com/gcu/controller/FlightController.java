@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gcu.business.FlightBusinessInterface;
 
 import com.gcu.model.Flight;
+import com.gcu.model.User;
+import com.gcu.model.UserFlight;
 import com.gcu.util.FlightNotFoundException;
 
 /**
@@ -102,11 +103,16 @@ public class FlightController {
 		 * Getting the list of flights from business service
 		 */
 		List<Flight> flights;
+		
 		//ViewType one stands for one way search. This is used in JSTL if statement to show inBound Flight result
 		int viewType=1;
 		try {
 			logger.info("Entering try block of oneWayResult");
 			flights = interf.findOneWayFlight(flight);
+			String originAirport= flight.getOriginAirport();
+			String destinationAirport=flight.getDestinationAirport();
+			String departureDate=flight.getFlightDate();
+			
 			/**
 			 * Adding object to view
 			 */
@@ -114,7 +120,11 @@ public class FlightController {
 			mv.addObject("flights", flights);
 			mv.addObject("viewType",viewType);
 			mv.addObject("buttonDisabler",buttonDisabler);
+			mv.addObject("originAirport",originAirport);
+			mv.addObject("destinationAirport",destinationAirport);
+			mv.addObject("departureDate", departureDate);
 			logger.info("redirecting to flightSearchResult");
+			
 			return mv;
 		} catch (FlightNotFoundException e) {
 			logger.error("Could not find flight");
@@ -197,7 +207,7 @@ public class FlightController {
     		  }
     		  else
     		  {
-    			  ModelAndView mv = new ModelAndView("viewSelectedFlightsPage");
+    			  ModelAndView mv = new ModelAndView("redirect:/user/userDetail");
     			  cart.addAll(i, interf.findFlightById(flight));
         		  i++;
         		  int viewType=viewTypeSelector;
@@ -215,6 +225,7 @@ public class FlightController {
     	  return null;
 	}
 	
+		
 	/**
 	 * This method is used to redirect user to payment page
 	 * @return modelAndView
