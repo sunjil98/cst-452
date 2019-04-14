@@ -52,8 +52,8 @@ public class FlightController {
 	 * Flight Model injection
 	 */
 	Flight flight;
-	
 	int buttonDisabler=0;
+	
 	
 	/**
 	 * This method is used to display view to enter information for One way ticket. This return oneWayFlightSearchPage as a view.
@@ -88,6 +88,8 @@ public class FlightController {
 	{
 		return new ModelAndView("viewSelectedFlightsPage");
 	}
+	
+	
 	
 	/**
 	 * This method is used to take the POST data from one way ticket search and redirect user to search result page.
@@ -156,6 +158,10 @@ public class FlightController {
 		try {
 			flights = interf.findOneWayFlight(flight);
 			inBound= interf.findBackWayFlight(flight);
+			String originAirport= flight.getOriginAirport();
+			String destinationAirport=flight.getDestinationAirport();
+			String departureDate=flight.getFlightDate();
+			String returnDate=flight.getReturnDate();
 			/**
 			 * Adding object to view
 			 */
@@ -166,6 +172,10 @@ public class FlightController {
 			session.setAttribute("inBound", inBound);
 			mv.addObject("viewType",viewType);
 			mv.addObject("buttonDisabler",buttonDisabler);
+			mv.addObject("originAirport",originAirport);
+			mv.addObject("destinationAirport",destinationAirport);
+			mv.addObject("departureDate", departureDate);
+			mv.addObject("returnDate",returnDate);
 			return mv;
 		} catch (FlightNotFoundException e) {
 			System.out.println("caught no Flight found");
@@ -188,7 +198,7 @@ public class FlightController {
 	@RequestMapping(value="/buy", method=RequestMethod.POST)
 	public ModelAndView selectFlight(@ModelAttribute("flight") Flight flight, HttpSession session,@RequestParam("viewTypeSelector") int viewTypeSelector)
 	{
-         
+		
     	  i=cart.size();
     	  
     	 
@@ -207,12 +217,15 @@ public class FlightController {
     		  }
     		  else
     		  {
+    			  
     			  ModelAndView mv = new ModelAndView("redirect:/user/userDetail");
     			  cart.addAll(i, interf.findFlightById(flight));
         		  i++;
         		  int viewType=viewTypeSelector;
         		  mv.addObject("viewType",viewType);
+        	
         		  session.setAttribute("cart", cart);
+        		  mv.addObject("cart",cart);
         	      return mv;
     		  }
     		 
@@ -225,18 +238,19 @@ public class FlightController {
     	  return null;
 	}
 	
-		
-	/**
-	 * This method is used to redirect user to payment page
-	 * @return modelAndView
-	 */
-	@RequestMapping(path="/payment", method=RequestMethod.GET)
-	public ModelAndView displayPaymentForm()
-	{
-		return new ModelAndView("payment");
-	}
 	
-	
+/**
+ * This method is used to redirect user to payment page
+ * @return modelAndView
+ */
+@RequestMapping(path="/removeflight", method=RequestMethod.POST)
+public String removeFlightFromCart(HttpSession session,@RequestParam("id") int id)
+{
+	session.getAttribute("cart");
+	cart.remove(id);
+	return "redirect:/viewSelectedFlights";
+}
+
 	/**
 	 * List of airport that is being displayed in drop down in views
 	 * @return

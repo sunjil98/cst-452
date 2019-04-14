@@ -14,12 +14,12 @@
 		  <div class="container">
 		  	<div class="row">
 		  	
-		  	<div class="col">
+		  	<div class="col-sm-12 col-md-12 col-lg-12">
 		  	<br/>
 			<form:label path="flightDate">Flight Date:</form:label>
 			<form:input path="flightDate"/><form:errors path="flightDate"/>
 		     </div>
-		     <div class="col">
+		     <div class="col-sm-12 col-md-12 col-lg-12">
                <form:label path = "originAirport">From</form:label>
                
                   <form:select path = "originAirport">
@@ -27,7 +27,7 @@
                      <form:options items = "${airportList}" />
                   </form:select>     	
                </div>
-               <div class="col">
+               <div class="col-sm-12 col-md-12 col-lg-12">
                <br/>
                 <form:label path = "destinationAirport">To</form:label>
                

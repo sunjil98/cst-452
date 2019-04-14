@@ -20,4 +20,8 @@
 	<definition name="viewSelectedFlightsPage" extends="DefaultTemplate">
     	<put-attribute name="body" value="/WEB-INF/pages/viewSelectedFlightsPage.jsp" />
 	</definition>
+	<definition name="userDetail" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/userDetail.jsp" />
+	</definition>
+	
 </tiles-definitions>

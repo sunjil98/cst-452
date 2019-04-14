@@ -22,36 +22,37 @@ another one to display inBound flight. Inbound flight result is only displayed f
 		<div class="col">
 			Departure:<c:out value="${departureDate}"></c:out>
 		</div>
+		<c:if test="${returnDate!=null}">
+		<div class="col">
+			Return:<c:out value="${returnDate}"></c:out>
+		</div>
+		</c:if>
 	</div>
 	</div>
 </div>
 
-
-		<!-- For each loop to dispaly all the outBound flight matching the criteria-->
-		<c:forEach var="flights" items="${flights}">
-		       <div class="container">
-		       <div class="row" style="background-color:yellow;">
-				       <div class="col">
-							<c:out value="${flights.originAirport}"></c:out>--------------
-						</div>
-						<div class="col">
-						<c:out value="${flights.destinationAirport}"></c:out>
-						</div>
-						<div class="col">
-						<c:out value="${flights.flightDate}"></c:out>
-						</div>
-						<div class="col">
-						<c:out value="${flights.flightTime}"></c:out>
-						</div>
-					    <div class="col">
-						<c:out value="${flights.flightHours}"></c:out>
-						</div>
-						<div class="col">
-						<c:out value="${flights.price}"></c:out>
-						</div>
-				<!-- Select button to select flight-->
-				
-				<c:if test="${viewType==1}">
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<!-- bootstrap table of shoes -->
+			<table class="table table-striped" id="guest_table">
+				<!-- header first row -->
+				<tr>
+					<th scope="col"><label>From</label></th>
+					<th scope="col"><label>To</label></th>		
+					<th scope="col"><label>Date</label></th>
+					<th scope="col"><label>Time</label></th>
+					<th scope="col"><label>Price</label>							
+				</tr>
+				<c:forEach var="flights" items="${flights}">
+				<tr>
+					<td><div class="col-sm-4"><label>${flights.originAirport}</label></div></td>
+					<td><div class="col-sm-4"><label>${flights.destinationAirport}</label></div></td>
+					<td><label>${flights.flightDate}</label></td>
+					<td><label>${flights.flightTime}</label></td>
+					<td><label>${flights.price}</label></td>
+					<td>
+						<c:if test="${viewType==1}">
 				<div class="col">
 					<div class="button-class" style="margin:auto;">
 				<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
@@ -74,41 +75,40 @@ another one to display inBound flight. Inbound flight result is only displayed f
 						<br/>
 					</form:form>
 					</div>
-					</c:if>			
-					</div>
-					</div>
-		</c:forEach>
-		
-		</table>
+					</c:if>
+					</td>
+				</tr>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
+</div>
+
 		<h1><c:out value="${buttonDisabler}"></c:out></h1>
 		<c:if test="${viewType==2}">
 		<h5>In bound flight</h5>
-		<table>
-		<tr>
-		<th ><label>Origin</label></th>
-		<th ><label>Destination</label></th>
-		<th ><label>Flight Date</label></th>
-		<th ><label>Flight Time</label></th>
-		<th ><label>Connection Time</label></th>
-		<th ><label>Meal</label></th>
-		<th><label>Aircraft Type</label>
-		<th><label>Flight Hours</label>
-		<th><label>price</label>
-		
-		</tr>
+		<div class="container">
+	<div class="row">
+		<div class="col">
+			<!-- bootstrap table of shoes -->
+			<table class="table table-striped" id="guest_table">
+				<!-- header first row -->
+				<tr>
+					<th scope="col"><label>From</label></th>
+					<th scope="col"><label>To</label></th>		
+					<th scope="col"><label>Date</label></th>
+					<th scope="col"><label>Time</label></th>
+					<th scope="col"><label>Price</label>							
+				</tr>
 		<!-- For each loop to display inBound flight for matching criteria-->
 		<c:forEach var="inBound" items="${inBound}">
 		<tr>	
-				<td><label>${inBound.originAirport}</label></td>
-				<td><label>${inBound.destinationAirport}</label></td>
-				<td><label>${inBound.flightDate}</label></td>
-				<td><label>${inBound.flightTime}</label></td>
-				<td><label>${inBound.connectionFlight}</label></td>
-				<td><label>${inBound.meal}</label></td>
-				<td><label>${inBound.aircraftType}</label></td>
-				<td><label>${inBound.flightHours}</label></td>
-				<td><label>${inBound.price}</label></td>
-				<td>
+				<td><div class="col-sm-4"><label>${inBound.originAirport}</label></div></td>
+					<td><div class="col-sm-4"><label>${inBound.destinationAirport}</label></div></td>
+					<td><label>${inBound.flightDate}</label></td>
+					<td><label>${inBound.flightTime}</label></td>
+					<td><label>${inBound.price}</label></td>
+					<td>
 					<!-- send select data to viewSelectedFlight page -->
 					<form:form method="POST" modelAttribute="flight" action="buy" autocomplete="off">
 						<input id="id" name="id" type="hidden" value="${inBound.id}"/>
@@ -121,7 +121,11 @@ another one to display inBound flight. Inbound flight result is only displayed f
 				
 		</c:forEach>
 		</table>
+		</div>
+		</div>
+		</div>
+		
 		</c:if>
-		<a href="/letsFly3/oneWay" role="button">Go Back</a>
-		<a href="/letsFly3/viewSelectedFlights" role="button"> See flights</a>
+		<button a href="/letsFly3/oneWay" >Go Back</a></button>
+		
 </body>

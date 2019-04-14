@@ -1,14 +1,21 @@
 <style>
-header {
-  background-color: #666;
-  padding:0px;
-  text-align: center;
-  font-size: 35px;
-  color: white;
+.masthead {
+  height:200px;
+  background-image: url('https://www.travelogyindia.com/blog/wp-content/uploads/2018/09/Nepal-Mountain.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position:flex;
 }
 </style>
-<body>
-<header>
-<img src="https://cdn.pixabay.com/photo/2015/12/08/08/40/banner-1082646__340.jpg">
+<header class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center">
+        <h1 class="font-weight-light">Ridiculous travel deals
+you can't find anywhere else.</h1>
+      
+      </div>
+    </div>
+  </div>
 </header>
-</body>

@@ -9,26 +9,45 @@ public class User {
 	int customerID;
 	
 	@NotNull(message="Firstname cannot be null")
-	@Size(min=2, max=20, message="Firstname must be between 2 and 20 characters")
+	@Size(min=4, max=20, message="Firstname must be between 2 and 20 characters")
 	String firstname;
 	
 	@NotNull(message="Lastname cannot be null")
-	@Size(min=2, max=20, message="Lastname must be between 2 and 20 characters")
+	@Size(min=4, max=20, message="Lastname must be between 2 and 20 characters")
 	String lastname;
 	
 	@NotNull(message="Email cannot be null")
-	@Size(min=2, max=20, message="Email must be between 2 and 20 characters")
+	@Size(min=4, max=20, message="Email must be between 2 and 20 characters")
 	String email;
 	
 	@NotNull(message="Phone number cannot be null")
-	@Size(min=2, max=20, message="Phone number must be 10 digits")
+	@Size(min=10, max=10, message="Phone number must be 10 digits")
 	int phone;
 	
+	int numberOfUser;
+	
+	public int getNumberOfUser() {
+		return numberOfUser;
+	}
+
+	public void setNumberOfUser(int numberOfUser) {
+		this.numberOfUser = numberOfUser;
+	}
+
 	public User()
 	{
 		
 	}
 	
+    public User(String firstname, String lastname, String email, int phone, int numberOfUser) {
+		
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.phone = phone;
+		this.numberOfUser=numberOfUser;
+	}
+    
 	public User(String firstname, String lastname, String email, int phone) {
 		
 		this.firstname = firstname;

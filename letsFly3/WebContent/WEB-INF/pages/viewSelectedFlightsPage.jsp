@@ -5,48 +5,77 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- This page is responsible for providing detail of the flights they selected. It will also give user to choose the number of passenger -->
 <body>
-<h1><c:out value="${userInfo.firstname}"></c:out></h1>
-<table>
-<!-- Table that goes through the list of flight that are stored in Session and render them -->
-		<tr>
-		<th ><label>Origin</label></th>
-		<th ><label>Destination</label></th>
-		<th ><label>Flight Date</label></th>
-		<th ><label>Flight Time</label></th>
-		<th ><label>Connection Time</label></th>
-		<th ><label>Meal</label></th>
-		<th><label>Aircraft Type</label>
-		<th><label>Flight Hours</label>
-		<th><label>price</label>
-		</tr>
-		<c:set var="total" value="0"></c:set>
-		<c:forEach var="flights" items="${sessionScope.cart}">
-		<c:set var="total"
-			value="${total+ flights.price}"></c:set>
-		<tr>
-				<td><label>${flights.originAirport}</label></td>
-				<td><label>${flights.destinationAirport}</label></td>
-				<td><label>${flights.flightDate}</label></td>
-				<td><label>${flights.flightTime}</label></td>
-				<td><label>${flights.connectionFlight}</label></td>
-				<td><label>${flights.meal}</label></td>
-				<td><label>${flights.aircraftType}</label></td>
-				<td><label>${flights.flightHours}</label></td>
-				<td><label>${flights.price}</label></td>
-				<td>
-				<form:form method="GET" modelAttribute="flight" action="oneWay" autocomplete="off">
-						<button type="submit" class="btn btn-remove">Remove</button>
-						<br/>
-					</form:form>
-				</td>
-				</tr>
+<div class="container">
+	<div class="row">
+	<div class="col-sm-6 col-md-6 col-lg-6S" style="background-color:yellow;">
+	<div class="form-group">
+	<h5>Thank you very much for your business. Please review you personal detail below.</h5>
+	</div>
+	<div class="form-group">
+	Firstname:<c:out value="${userInfo.firstname}"></c:out>
+	</div>
+	<div class="form-group">
+	Lastname:<c:out value="${userInfo.lastname}"></c:out>
+	</div>
+	<div class="form-group">
+	Email:<c:out value="${userInfo.email}"></c:out>
+	</div>
+	<div class="form-group">
+	Phone:<c:out value="${userInfo.phone}"></c:out>
+	</div>
+</div>
+	<div class="col-sm-6 col-md-6 col-lg-6S"style="background-color:pink;">
+      <h1>Flight Info</h1>
+       <c:forEach var="cart" items="${sessionScope.cart}" varStatus="status">
+       <c:set var="actualprice" value="0"></c:set>
+       <c:set var="tax" value="0"></c:set>
+       <c:set var="total" value="0"></c:set>
+       	<c:set var="airportservicecharge" value="0"></c:set>
+		
+		<c:set var="actualprice" value="${actualprice+ cart.price}"></c:set>	
+		
+		<c:set var ="tax" value="${actualprice* 0.20}"></c:set>
+	
+		<c:set var ="airportservicecharge" value="${actualprice* 0.10}"></c:set>
+		
+		<c:set var="total" value="${actualprice+tax+airportservicecharge}"></c:set>
+		
+		From:<c:out value="${cart.originAirport}"></c:out>
+		<br/>
+		To:<c:out value="${cart.destinationAirport}"></c:out>
+		<br/>
+		Time:<c:out value="${cart.flightTime}"></c:out>
+		<br/>
+		Date:<c:out value="${cart.flightDate}"></c:out>
+		<br/>
+		Layover:<c:out value="${cart.connectionFlight}"></c:out>
+		<br/>
+		Meal:<c:out value="${cart.meal}"></c:out>
+		<br/>
+	
+		<h2>------------------</h2>
+		
 				</c:forEach>
-</table>
+					<c:set var="id" value ="cart${status.index}"></c:set>
+		Amount:$<c:out value="${actualprice }"></c:out>
+		<br/>
+		Tax:$<c:out value="${tax }"></c:out>
+		<br/>
+		Airport tax: $<c:out value="${airportservicecharge }"></c:out>
+		<br/>
+		Total:$<c:out value="${total }"></c:out>
+				
+</div>
+</div>
+</div>
+<c:if test="${buttonDisabler==0}">
 <form:form method="POST" model="UserFlight" action="saveuser">
 
 <button type="submit" class="btn btn-submit">Confirm</button>
 </form:form>
+</c:if>
 
+<c:if test="${buttonDisabler!=0}">
 <!-- This is the form that is responsible for PayPal payment -->
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 
@@ -68,4 +97,5 @@
   src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
 
 </form>
+</c:if>
 </body>
