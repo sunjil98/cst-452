@@ -6,6 +6,7 @@
  */
 package com.gcu.business;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class FlightBusinessService implements FlightBusinessInterface {
 			throw new FlightNotFoundException();
 		}
 		else
-		return dao.findOneWayFlight(flight);
+		return result;
 	}
 	/**
 	 * This method is responsible to get list of flights passed on by the findBackWayFlight method in DAO class.
@@ -54,12 +55,16 @@ public class FlightBusinessService implements FlightBusinessInterface {
 	public List<Flight> findBackWayFlight(Flight flight) throws FlightNotFoundException
 	{
 		List<Flight> inBoundList=dao.findBackWayFlight(flight);
+		/**
+		 * If else block to determine the size of return list. This method will throw FlighNotFoundException
+		 * if list is nulll
+		 */
 		if(inBoundList.size()==0)
 		{
 			throw new FlightNotFoundException();
 		}
 		else
-			return dao.findBackWayFlight(flight);
+			return inBoundList;
 	}
 	/**
 	 * This method is responsible to get the list of flight passed on by the findFlightById method in DAO class. The result is return based on flight id
@@ -72,6 +77,10 @@ public class FlightBusinessService implements FlightBusinessInterface {
 	public List<Flight> findFlightById(Flight flight) throws FlightNotFoundException
 	{
 		List<Flight> flightById= dao.findFlightById(flight);
+		/**
+		 * If else block to determine the size of return list. This method will throw FlighNotFoundException
+		 * if list is nulll
+		 */
 		if(flightById.size()==0)
 		{
 			throw new FlightNotFoundException();
@@ -83,6 +92,7 @@ public class FlightBusinessService implements FlightBusinessInterface {
 	 * init method to initialize the season
 	 * @return void
 	 */
+
 	public void init()
 	{
 		//print init msg

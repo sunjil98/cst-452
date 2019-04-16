@@ -63,4 +63,5 @@
 	<bean id="userDataService" class="com.gcu.data.UserDataService">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
+
  </beans>

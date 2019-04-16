@@ -10,7 +10,7 @@ this form and one way flight search form is it has extra field to enter return d
 
 <h2>Two way Flight</h2>
 <!-- Link to get the page to do one way ticket search -->
-<a  href="/letsFly3/oneWay" role="button">One Way</a>
+<a  href="/oneWay"><button>One Way Flight Search</button></a>
 <form:form method = "POST" modelAttribute="flight" action="roundWayResult">
 	        <div class="container">
 	        <div class="row">

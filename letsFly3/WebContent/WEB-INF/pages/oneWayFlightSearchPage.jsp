@@ -7,7 +7,7 @@
 <!-- This page display the form to perform one way flight search. -->
 <h2>One way Flight</h2>
 <!-- Link to get to the page to search for round trip -->
-<a  href="/letsFly3/roundTrip" role="button">Round Trip</a>
+<a  href="/roundTrip"><button>Round Trip Flight Search</button></a>
 <form:form method = "POST" modelAttribute="flight" action="oneWayResult">
 
 <!-- Input area -->

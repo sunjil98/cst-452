@@ -54,7 +54,7 @@
 		<br/>
 	
 		<h2>------------------</h2>
-		
+
 				</c:forEach>
 					<c:set var="id" value ="cart${status.index}"></c:set>
 		Amount:$<c:out value="${actualprice }"></c:out>
@@ -70,12 +70,17 @@
 </div>
 <c:if test="${buttonDisabler==0}">
 <form:form method="POST" model="UserFlight" action="saveuser">
-
-<button type="submit" class="btn btn-submit">Confirm</button>
+<input id="buttonDisabler" name="buttonDisabler" type="hidden" value="${1}"/>
+<button type="submit" class="btn btn-success">This information is Correct</button>
 </form:form>
 </c:if>
 
-<c:if test="${buttonDisabler!=0}">
+<c:if test="${buttonDisabler==0}">
+<form:form method="GET" action="userDetail">
+<button type="submit" class="btn btn-removal">This information is wrong</button>
+</form:form>
+</c:if>
+<c:if test="${buttonDisabler==1}">
 <!-- This is the form that is responsible for PayPal payment -->
 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 

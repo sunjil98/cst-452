@@ -48,18 +48,24 @@ public class FlightController {
 	 * Business service injection
 	 */
 	FlightBusinessInterface interf;
-	/**
-	 * Flight Model injection
-	 */
-	Flight flight;
+	
+   /**
+    * Initalizing buttonDisabler variable which is user to disable and enabled button on JSP pages
+    */
 	int buttonDisabler=0;
+	
+	/**
+	 * Initializing instance of Flight to hold flights that are added to the cart. Also initializing variables to count the index of cart                                                                                                                                                                     
+	 */
+	List<Flight> cart= new ArrayList<Flight>();
+	int i=0;
 	
 	
 	/**
 	 * This method is used to display view to enter information for One way ticket. This return oneWayFlightSearchPage as a view.
 	 * @return View
 	 */
-	@RequestMapping(path="/oneWay", method=RequestMethod.GET)
+	@RequestMapping(path="/", method=RequestMethod.GET)
 	public ModelAndView displayForm()
 	{
 		logger.info("Entering displayForm method in flight controller");
@@ -77,12 +83,10 @@ public class FlightController {
 		return new ModelAndView("twoWayFlightSearchPage", "flight", new Flight(0, null, null, null, null, null, null, null, 0, 0));
 	}
 	
-	@RequestMapping(path="/viewReturnFlightSearch", method=RequestMethod.GET)
-	public ModelAndView dispalyReturnFlightSearch()
-	{
-		return new ModelAndView("viewReturnFlightSearch");
-	}
-	
+	/**
+	 * This method is used to direct user to the page where they can see all the selected flights
+	 * @return ModelAndView: viewSelectedFlightsPage
+	 */
 	@RequestMapping(path="/viewSelectedFlights", method=RequestMethod.GET)
 	public ModelAndView displaySelectedFlights()
 	{
@@ -102,13 +106,26 @@ public class FlightController {
 	{
 		logger.info("Entering displayonewayresult method in flightcontroller");
 		/**
-		 * Getting the list of flights from business service
+		 * Initalizing variable of type Flight to hold the list of flights return from the search result as resultset
 		 */
 		List<Flight> flights;
 		
-		//ViewType one stands for one way search. This is used in JSTL if statement to show inBound Flight result
+		/**
+		 * Getting the list of flights from business service
+		 */
+	
+		/**
+		 * ViewType 1 stands for one way search and two for 2 RoundTrip search. This is used in JSTL if statement to show inBound Flight result
+		 */
+		
 		int viewType=1;
+		/**
+		 * Try and catch block
+		 */
 		try {
+			/**
+			 * Getting originairport, destination, and flight data from the return list to add in the view
+			 */
 			logger.info("Entering try block of oneWayResult");
 			flights = interf.findOneWayFlight(flight);
 			String originAirport= flight.getOriginAirport();
@@ -149,13 +166,19 @@ public class FlightController {
 	{
 		logger.info("entering displayRoudWayResult method in flightcontroller");
 		/**
-		 * Getting the list of flights from business service
+		 * Getting the list of flights from business service and stroing in list
 		 */
 		List<Flight> flights;
 		List<Flight> inBound;
-		//ViewType two stands for round way search. This is used in JSTL if statement to show inBound Flight result
+		/**
+		 * ViewType two stands for round way search. This is used in JSTL if statement to show inBound Flight result
+		 */
 		int viewType=2;
 		try {
+			/**
+			 * Storing origin airport, destination airport, flightdate, and return flight date in variables, which is then passed on
+			 * to view 
+			 */
 			flights = interf.findOneWayFlight(flight);
 			inBound= interf.findBackWayFlight(flight);
 			String originAirport= flight.getOriginAirport();
@@ -186,8 +209,6 @@ public class FlightController {
 		
 		
 	}
-	List<Flight> cart= new ArrayList<Flight>();
-	int i=0;
 	
 	/**
 	 * This method is used to get the id of user selected flight and storing the information of that particular flight in session. 
@@ -199,12 +220,21 @@ public class FlightController {
 	public ModelAndView selectFlight(@ModelAttribute("flight") Flight flight, HttpSession session,@RequestParam("viewTypeSelector") int viewTypeSelector)
 	{
 		
-    	  i=cart.size();
+    	i=cart.size();
     	  
-    	 
+    	 /**
+    	  * Try and catch block. Try block has all the logic required to perform task where as catch block catch flightnotfoundexception
+    	  */
     	  try {
+    		  /**
+    		   * ViewSelector=2 is used to display both inbound and outbound flights in flight result page
+    		   */
     		  if(viewTypeSelector==2)
     		  {
+    			  /**
+    			   * creating instance of modelandview.
+    			   * adding flights in the cart and increasing value of i
+    			   */
     		   ModelAndView mv = new ModelAndView("flightSearchResult");
     		  cart.addAll(i, interf.findFlightById(flight));
     		  i++;
@@ -218,14 +248,21 @@ public class FlightController {
     		  else
     		  {
     			  
-    			  ModelAndView mv = new ModelAndView("redirect:/user/userDetail");
+    			  ModelAndView mv = new ModelAndView("redirect:/userDetail");
     			  cart.addAll(i, interf.findFlightById(flight));
         		  i++;
         		  int viewType=viewTypeSelector;
         		  mv.addObject("viewType",viewType);
-        	
         		  session.setAttribute("cart", cart);
         		  mv.addObject("cart",cart);
+        		  String originAirport= flight.getOriginAirport();
+      			String destinationAirport=flight.getDestinationAirport();
+      			String departureDate=flight.getFlightDate();
+      			String returnDate=flight.getReturnDate();
+      			mv.addObject("originAirport",originAirport);
+    			mv.addObject("destinationAirport",destinationAirport);
+    			mv.addObject("departureDate", departureDate);
+    			mv.addObject("returnDate",returnDate);
         	      return mv;
     		  }
     		 
@@ -243,20 +280,13 @@ public class FlightController {
  * This method is used to redirect user to payment page
  * @return modelAndView
  */
-@RequestMapping(path="/removeflight", method=RequestMethod.POST)
-public String removeFlightFromCart(HttpSession session,@RequestParam("id") int id)
-{
-	session.getAttribute("cart");
-	cart.remove(id);
-	return "redirect:/viewSelectedFlights";
-}
 
 	/**
 	 * List of airport that is being displayed in drop down in views
 	 * @return
 	 */
 	@ModelAttribute("airportList")
-	   public Map<String, String> getCountryList() {
+	   public Map<String, String> getAirportList() {
 	      Map<String, String> airportList = new HashMap<String, String>();
 	      airportList.put("Los Angeles International Airport","LAX- Los Angeles International Airport");
 		   airportList.put("Tribhuwan International Airport","KTM- Tribhuwan International Airport");

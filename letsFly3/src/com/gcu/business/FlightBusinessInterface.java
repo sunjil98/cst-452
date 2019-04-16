@@ -22,12 +22,22 @@ public interface FlightBusinessInterface {
 	/**
 	 * findOneWayFlight method
 	 * @param flight
-	 * @return List
+	 * @return List<Flight>
 	 */
 	public List<Flight> findOneWayFlight(Flight flight)throws FlightNotFoundException;
-	
+	/**
+	 * findBackWayFlight method
+	 * @param flight
+	 * @return List
+	 */
 	public List<Flight> findBackWayFlight(Flight flight) throws FlightNotFoundException;
 	
+	/**
+	 * 
+	 * @param flight
+	 * @return List<Flight>
+	 * @throws FlightNotFoundException
+	 */
 	public List<Flight> findFlightById(Flight flight) throws FlightNotFoundException;
 	/**
 	 * method init

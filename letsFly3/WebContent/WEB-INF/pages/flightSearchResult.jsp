@@ -84,7 +84,6 @@ another one to display inBound flight. Inbound flight result is only displayed f
 	</div>
 </div>
 
-		<h1><c:out value="${buttonDisabler}"></c:out></h1>
 		<c:if test="${viewType==2}">
 		<h5>In bound flight</h5>
 		<div class="container">
