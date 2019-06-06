@@ -48,12 +48,14 @@ public class FlightDataService implements FlightDataAccessInterface<Flight>{
 	@Override
 	public List<Flight> findOneWayFlight(Flight t) {
 		List<Flight> outBoundFlight = new ArrayList<Flight>();
+		String flightDate=t.getFlightDate();
+		String newFlightDate= flightDate.replace(",flightDate","");
 		
-		String sql= "SELECT * FROM letsfly.FLIGHT WHERE ORIGINAIRPORT=? AND DESTINATIONAIRPORT=? AND FLIGHTDATE=?";
+		String sql= "SELECT * FROM etpdiccxs02169o9.FLIGHT WHERE ORIGINAIRPORT=? AND DESTINATIONAIRPORT=? AND FLIGHTDATE=?";
 		
 		try {
 			//execute sql
-			SqlRowSet srs= jdbcTemplateObject.queryForRowSet(sql, t.getOriginAirport(), t.getDestinationAirport(),t.getFlightDate());
+			SqlRowSet srs= jdbcTemplateObject.queryForRowSet(sql, t.getOriginAirport(), t.getDestinationAirport(),newFlightDate);
 			while(srs.next()) {
 				outBoundFlight.add(new Flight(srs.getInt("FID"),
 						srs.getString("ORIGINAIRPORT"),
@@ -91,12 +93,13 @@ public class FlightDataService implements FlightDataAccessInterface<Flight>{
 	@Override
 	public List<Flight> findBackWayFlight(Flight t) {
 		List<Flight> inBoundFlight = new ArrayList<Flight>();
-		
-		String sql= "SELECT * FROM letsfly.FLIGHT WHERE ORIGINAIRPORT=? AND DESTINATIONAIRPORT=? AND FLIGHTDATE=?";
+		String returnDate=t.getReturnDate();
+		String newreturnDate= returnDate.replace(",returnDate","");
+		String sql= "SELECT * FROM etpdiccxs02169o9.FLIGHT WHERE ORIGINAIRPORT=? AND DESTINATIONAIRPORT=? AND FLIGHTDATE=?";
 		
 		try {
 			//execute sql
-			SqlRowSet srs= jdbcTemplateObject.queryForRowSet(sql, t.getDestinationAirport(), t.getOriginAirport(),t.getReturnDate());
+			SqlRowSet srs= jdbcTemplateObject.queryForRowSet(sql, t.getDestinationAirport(), t.getOriginAirport(),newreturnDate);
 			while(srs.next()) {
 				inBoundFlight.add(new Flight(srs.getInt("FID"),
 						srs.getString("ORIGINAIRPORT"),
@@ -131,7 +134,7 @@ public class FlightDataService implements FlightDataAccessInterface<Flight>{
 	public List<Flight> findFlightById(Flight t)
 	{
 		List<Flight> flightById= new ArrayList<Flight>();
-		String sql= "SELECT * FROM letsfly.FLIGHT WHERE FID=?";
+		String sql= "SELECT * FROM etpdiccxs02169o9.FLIGHT WHERE FID=?";
 		try {
 			//execute sql
 			SqlRowSet srs= jdbcTemplateObject.queryForRowSet(sql, t.getId());

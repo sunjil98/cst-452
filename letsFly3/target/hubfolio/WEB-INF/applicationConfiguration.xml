@@ -1,0 +1,102 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd       
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+   <context:component-scan base-package="com.gcu" />
+   <!-- Below link is for auto wiring spring beans -->
+   <context:annotation-config/>
+   <mvc:annotation-driven />
+ 
+  	<bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+ 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/layouts/layouts.xml</value>
+				<value>/WEB-INF/layouts/views.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	 <!-- Configuration Parameters -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:config/config.properties"/>
+    </bean>     
+	
+	<!-- letsfly.cvhykkzux4yr.us-east-2.rds.amazonaws.com
+	derby:C:\\\\Users\\\\sunze\\\\MyDB
+	 -->
+<bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://letsfly.cvhykkzux4yr.us-east-2.rds.amazonaws.com" />
+        <property name="username" value="root" />
+        <property name="password" value="password" />
+    </bean>
+    
+    
+  	<!-- Intercepter -->
+    <aop:aspectj-autoproxy/>
+    <bean id="tracer" class="com.gcu.utility.Tracer"> </bean>
+    <aop:config>
+        <aop:pointcut id="businessServices" expression="execution(* com.gcu.business.*Interface.*(..))"/>
+        <aop:aspect id="aroundBusiness" ref="tracer">
+            <aop:around pointcut-ref="businessServices" method="doBasicProfiling"/>
+        </aop:aspect>
+    </aop:config>
+    <aop:config>
+        <aop:pointcut id="dataServices" expression="execution(* com.gcu.data.*Interface.*(..))"/>
+        <aop:aspect id="aroundData" ref="tracer">
+            <aop:around pointcut-ref="dataServices" method="doBasicProfiling"/>
+        </aop:aspect>
+    </aop:config>
+    <aop:config>
+        <aop:pointcut id="controllers" expression="within(com.gcu.controller..*)"/>
+        <aop:aspect id="aroundController" ref="tracer">
+            <aop:around pointcut-ref="controllers" method="doBasicProfiling"/>
+        </aop:aspect>
+    </aop:config>
+    <aop:config>
+        <aop:pointcut id="examplePointcut" expression="within(com.gcu.controller..*)"/>
+        <aop:aspect id="withinExample" ref="tracer">
+            <aop:before pointcut-ref="examplePointcut" method="inPresentationLayer"/>
+        </aop:aspect>
+    </aop:config>
+    
+      <!-- Setup Transaction Manager -->
+    <aop:config>
+        <aop:pointcut id="allServiceMethods" expression="execution(* com.gcu.business.*Interface.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="allServiceMethods" />
+    </aop:config>
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="find*" read-only="true" />
+            <tx:method name="*" />
+        </tx:attributes>
+    </tx:advice>
+    
+	<!-- Application Spring Beans -->
+	<bean id="flightDataService" class="com.gcu.data.FlightDataService">
+		<property name="dataSource" ref="dataSource" />
+ 	</bean>
+	
+	<bean id="userDataService" class="com.gcu.data.UserDataService">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+ </beans>

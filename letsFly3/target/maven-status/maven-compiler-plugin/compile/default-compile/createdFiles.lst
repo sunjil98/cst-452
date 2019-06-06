@@ -4,6 +4,7 @@ com\gcu\data\UserDataAccessInterface.class
 com\gcu\model\UserFlight.class
 com\gcu\model\Flight.class
 com\gcu\ApplicationConfig.class
+com\gcu\utility\Tracer.class
 com\gcu\util\DatabaseException.class
 com\gcu\data\UserDataService.class
 com\gcu\business\UserBusinessService.class

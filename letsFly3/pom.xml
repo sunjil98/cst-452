@@ -4,8 +4,53 @@
   <artifactId>letsFly3</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
+  <properties>
+  <warname>letsFly3</warname>
+  </properties>
+  
+  <!-- Cloud Platform Profile configurations -->
+  <profiles>
+      
+      <profile>
+         <id>heroku</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <properties>
+             <build.profile.id>heroku</build.profile.id>
+         </properties>
+         <build>
+           <resources>
+             <resource>
+               <directory>src/config/heroku</directory>
+               <includes>
+                 <include>config.properties</include>
+               </includes>
+               <targetPath>config</targetPath>
+             </resource>
+             <resource>
+               <directory>src/config/heroku</directory>
+               <includes>
+                 <include>web.xml</include>
+               </includes>
+               <targetPath>${project.basedir}/target/${warname}/WEB-INF</targetPath>
+             </resource>
+            <resource>
+               <directory>src/config/heroku</directory>
+               <includes>
+                 <include>log4j.xml</include>
+               </includes>
+               <targetPath>../${warname}/WEB-INF/classes</targetPath>
+             </resource>
+           </resources>
+         </build>
+     </profile>
+  </profiles>
+
+  <!-- Build Rules -->
   <build>
     <sourceDirectory>src</sourceDirectory>
+    <finalName>${warname}</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -18,53 +63,55 @@
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.0.0</version>
-        <configuration>
-          <warSourceDirectory>WebContent</warSourceDirectory>
-        </configuration>
+ 	    <configuration>
+	    	<warSourceDirectory>${project.basedir}/target/${warname}</warSourceDirectory>
+ 	    </configuration>
       </plugin>
+      
       <plugin>
-
-<groupId>org.apache.maven.plugins</groupId>
-
-<artifactId>maven-dependency-plugin</artifactId>
-
-<version>3.0.2</version>
-
-<executions>
-
-<execution>
-
-<phase>package</phase>
-
-<goals><goal>copy</goal></goals>
-
-<configuration>
-
-<artifactItems>
-
-<artifactItem>
-
-<groupId>com.github.jsimone</groupId>
-
-<artifactId>webapp-runner</artifactId>
-
-<version>8.5.31.0</version>
-
-<destFileName>webapp-runner.jar</destFileName>
-
-</artifactItem>
-
-</artifactItems>
-
-</configuration>
-
-</execution>
-
-</executions>
-
-</plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.0.2</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>com.github.jsimone</groupId>
+									<artifactId>webapp-runner</artifactId>
+									<version>8.5.31.0</version>
+									<destFileName>webapp-runner.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
     </plugins>
-    
+    <resources>
+    	<resource>
+             <directory>src</directory>
+             <excludes>
+                <exclude>**/*.java</exclude>
+                <exclude>**/config.properties</exclude> 
+                <exclude>**/web.xml</exclude>
+                <exclude>**/log4j.xml</exclude>
+              </excludes>
+      	</resource>
+      	<resource>
+             <directory>WebContent</directory>
+             <targetPath>${project.basedir}/target/${warname}</targetPath>
+             <includes>
+                <include>**/WEB-INF/layouts/**</include>
+                <include>**/WEB-INF/pages/**</include>
+                <include>**/WEB-INF/applicationConfiguration.xml</include>
+              </includes>
+     	</resource>
+     </resources>
   </build>
 
   <!-- Dependencies -->
@@ -139,7 +186,7 @@
 	<dependency>
     		<groupId>org.apache.derby</groupId>
     		<artifactId>derby</artifactId>
-    		<version>10.14.2.0</version>
+    		<version>10.13.1.1</version>
 	</dependency>
   	
   	<dependency>
@@ -258,37 +305,10 @@
     </dependency>
 	<dependency>
         <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-simple</artifactId>
-        <version>1.6.4</version>
-    </dependency>
-	<dependency>
-        <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
         <version>1.7.12</version>
     </dependency>
-    <!-- dependency added -->
-    <dependency>
-    <groupId>javax.faces</groupId>
-    <artifactId>javax.faces-api</artifactId>
-    <version>2.1</version>
-    <scope>provided</scope>
-</dependency>
-
-<dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-api</artifactId>
-    <version>2.7</version>
-</dependency>
-<dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-core</artifactId>
-    <version>2.7</version>
-</dependency>
-<dependency>
-    <groupId>org.apache.logging.log4j</groupId>
-    <artifactId>log4j-slf4j-impl</artifactId>
-    <version>2.7</version>
-</dependency>
   </dependencies>
 
 </project>
+  

@@ -65,10 +65,12 @@ public class FlightController {
 	 * This method is used to display view to enter information for One way ticket. This return oneWayFlightSearchPage as a view.
 	 * @return View
 	 */
-	@RequestMapping(path="/", method=RequestMethod.GET)
+	@RequestMapping(path="", method=RequestMethod.GET)
 	public ModelAndView displayForm()
 	{
 		logger.info("Entering displayForm method in flight controller");
+		cart.clear();
+		 buttonDisabler=0;
 		return new ModelAndView("oneWayFlightSearchPage", "flight", new Flight(0, null, null, null, null, null, null, null, 0, 0));
 	}
 	
@@ -80,6 +82,8 @@ public class FlightController {
 	public ModelAndView displayRoundTripForm()
 	{
 		logger.info("Entering displayRoundTripForm method in flightcontroller");
+		cart.clear();
+		 buttonDisabler=0;
 		return new ModelAndView("twoWayFlightSearchPage", "flight", new Flight(0, null, null, null, null, null, null, null, 0, 0));
 	}
 	
@@ -127,6 +131,7 @@ public class FlightController {
 			 * Getting originairport, destination, and flight data from the return list to add in the view
 			 */
 			logger.info("Entering try block of oneWayResult");
+			System.out.println("######################"+flight.getFlightDate()+"##########################");
 			flights = interf.findOneWayFlight(flight);
 			String originAirport= flight.getOriginAirport();
 			String destinationAirport=flight.getDestinationAirport();
@@ -243,6 +248,7 @@ public class FlightController {
     		  mv.addObject("viewType",viewType);
     		  mv.addObject("buttonDisabler",buttonDisabler);
     		  session.setAttribute("cart", cart);
+    		  mv.addObject("cart", cart);
     		  return mv;
     		  }
     		  else

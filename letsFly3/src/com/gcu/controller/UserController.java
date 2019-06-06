@@ -9,6 +9,7 @@ package com.gcu.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import com.gcu.model.Flight;
 import com.gcu.model.User;
@@ -67,12 +69,16 @@ public class UserController {
 	 * @return String
 	 */
 	@RequestMapping(path="/addUserInformation", method=RequestMethod.POST)
-	public ModelAndView displayUserInformation(@ModelAttribute("user") User user, HttpSession session)
+	public ModelAndView displayUserInformation(@Valid @ModelAttribute("user") User user,BindingResult result, HttpSession session)
 	{
 		/**
 		 * instance of UserFlight model
 		 */
 		User userInfo;
+		if(result.hasErrors()) {
+			return new ModelAndView("userDetail", "user", user);
+		}
+		
 		/**
 		 * adding user in the session using insertUserDataInSession method in UserBussinessService class
 		 */
@@ -81,6 +87,7 @@ public class UserController {
 		session.setAttribute("userInfo", userInfo);
 		mv.addObject("userInfo", userInfo);
 	    mv.addObject("buttonDisabler",buttonDisabler);
+		
 		return mv;
 	}
 	

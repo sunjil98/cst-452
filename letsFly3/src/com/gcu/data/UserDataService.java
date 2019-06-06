@@ -27,7 +27,7 @@ public class UserDataService implements UserDataAccessInterface<UserFlight> {
 	
 	@Override
 	public boolean addUser(UserFlight userFlight) {
-		String sql = "INSERT INTO letsfly.FLIGHTANDCUSTOMER(FIRSTNAME,LASTNAME, EMAIL, PHONE, FLIGHTID, ORIGINAIRPORT,DESTINATIONAIRPORT, FLIGHTDATE, FLIGHTTIME) VALUES(?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO etpdiccxs02169o9.FLIGHTANDCUSTOMER(FIRSTNAME,LASTNAME, EMAIL, PHONE, FLIGHTID, ORIGINAIRPORT,DESTINATIONAIRPORT, FLIGHTDATE, FLIGHTTIME) VALUES(?,?,?,?,?,?,?,?,?)";
 		try {
 			//execute sql 
 			int rows = jdbcTemplateObject.update(sql, userFlight.getFirstname(), userFlight.getLastname(), userFlight.getEmail(), userFlight.getPhone(), userFlight.getId(), userFlight.getOriginAirport(), userFlight.getDestinationAirport(), userFlight.getFlightDate(), userFlight.getFlightTime());

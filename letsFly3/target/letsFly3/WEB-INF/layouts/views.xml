@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="oneWayFlightSearchPage" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/oneWayFlightSearchPage.jsp" />
+	</definition>
+	<definition name="twoWayFlightSearchPage" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/twoWayFlightSearchPage.jsp" />
+	</definition>
+	<definition name="flightSearchResult" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/flightSearchResult.jsp" />
+	</definition>
+	<definition name="errorPage" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/errorPage.jsp" />
+	</definition>
+	<definition name="payment" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/payment.jsp" />
+	</definition>
+	<definition name="viewSelectedFlightsPage" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/viewSelectedFlightsPage.jsp" />
+	</definition>
+	<definition name="userDetail" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/userDetail.jsp" />
+	</definition>
+	
+</tiles-definitions>

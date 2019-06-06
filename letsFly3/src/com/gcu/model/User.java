@@ -1,7 +1,10 @@
 package com.gcu.model;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
+
 
 public class User {
 	
@@ -20,8 +23,7 @@ public class User {
 	@Size(min=4, max=20, message="Email must be between 2 and 20 characters")
 	String email;
 	
-	@NotNull(message="Phone number cannot be null")
-	@Size(min=10, max=10, message="Phone number must be 10 digits")
+	
 	int phone;
 	
 	int numberOfUser;
