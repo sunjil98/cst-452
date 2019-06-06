@@ -35,13 +35,6 @@
         <property name="location" value="classpath:config/config.properties"/>
     </bean>     
 	
-	<!-- letsfly.cvhykkzux4yr.us-east-2.rds.amazonaws.com
-	derby:C:\\\\Users\\\\sunze\\\\MyDB
-	AWS:
-		jdbc:mysql://letsfly.cvhykkzux4yr.us-east-2.rds.amazonaws.com
-		root
-		password
-	 -->
 <bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp2.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="${db.connection}" />
